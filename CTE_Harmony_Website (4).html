@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CTE @ Harmony School of Innovation — Sugar Land</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{--navy:#0d1b4b;--accent:#1a2f7a;--gold:#c8960c;--gold2:#f4b800;--white:#fff;--off:#f7f7f5;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:#fff;overflow-x:hidden;cursor:none;}
+.cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+.cursor-ring{position:fixed;width:34px;height:34px;border:2px solid rgba(200,150,12,.7);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .15s,height .15s,border-color .15s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:20px 60px;display:flex;justify-content:space-between;align-items:center;transition:background .4s;}
+nav.sc{background:rgba(13,27,75,.95);backdrop-filter:blur(18px);}
+.nl{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);}
+.nlinks{display:flex;gap:24px;}
+.nlinks a{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s;}
+.nlinks a:hover{color:var(--gold);}
+.ncta{background:var(--gold);color:var(--navy);padding:10px 22px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:transform .2s,box-shadow .2s;}
+.ncta:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,150,12,.45);}
+.pdots{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:150;display:flex;flex-direction:column;gap:10px;}
+.pd{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .3s;cursor:pointer;border:none;outline:none;}
+.pd.act{background:var(--gold);transform:scale(1.6);}
+.pd:hover{background:var(--gold);}
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.hbg{position:absolute;inset:0;background:radial-gradient(ellipse at 25% 50%,rgba(26,47,122,.9),transparent 55%),radial-gradient(ellipse at 80% 20%,rgba(200,150,12,.1),transparent 45%);}
+#pc{position:absolute;inset:0;width:100%;height:100%;}
+.hc{position:relative;z-index:2;text-align:center;padding:0 40px;max-width:900px;}
+.htag{display:inline-block;border:1px solid rgba(200,150,12,.4);color:var(--gold);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;padding:8px 20px;margin-bottom:36px;animation:fu .7s ease .2s both;}
+.ht{font-family:'Playfair Display',serif;font-size:clamp(52px,8vw,108px);font-weight:900;line-height:.9;letter-spacing:-.03em;margin-bottom:24px;animation:fu .7s ease .35s both;}
+.ht em{font-style:italic;color:var(--gold);display:block;}
+.hs{font-size:17px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.75;max-width:540px;margin:0 auto 48px;animation:fu .7s ease .5s both;}
+.hbtns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fu .7s ease .65s both;}
+.bp{background:var(--gold);color:var(--navy);padding:15px 34px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:transform .2s,box-shadow .2s;}
+.bp:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(200,150,12,.5);}
+.bo{border:1px solid rgba(255,255,255,.25);color:#fff;padding:15px 34px;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:all .2s;}
+.bo:hover{border-color:var(--gold);color:var(--gold);}
+.sh{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.25);font-size:10px;letter-spacing:.15em;text-transform:uppercase;}
+.sl{width:1px;height:50px;background:linear-gradient(to bottom,transparent,var(--gold));animation:sa 1.8s ease-in-out infinite;}
+/* TICKER */
+.ticker{background:var(--gold);padding:16px 0;overflow:hidden;}
+.tt{display:flex;animation:tk 22s linear infinite;white-space:nowrap;}
+.ti{display:flex;align-items:center;gap:28px;padding:0 40px;font-size:12px;font-weight:600;color:var(--navy);letter-spacing:.06em;text-transform:uppercase;}
+.tid{width:5px;height:5px;border-radius:50%;background:var(--navy);flex-shrink:0;}
+/* SECTION BASE */
+.sec{padding:110px 60px;position:relative;}
+.si{max-width:1160px;margin:0 auto;}
+.rv{opacity:0;transform:translateY(44px);transition:opacity .75s ease,transform .75s ease;}
+.rv.on{opacity:1;transform:translateY(0);}
+.rl{opacity:0;transform:translateX(-50px);transition:opacity .75s ease,transform .75s ease;}
+.rl.on{opacity:1;transform:translateX(0);}
+.rr{opacity:0;transform:translateX(50px);transition:opacity .75s ease,transform .75s ease;}
+.rr.on{opacity:1;transform:translateX(0);}
+.slb{font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.slb::before{content:'';width:28px;height:1px;background:var(--gold);flex-shrink:0;}
+.sti{font-family:'Playfair Display',serif;font-size:clamp(36px,4.5vw,62px);font-weight:700;line-height:1.05;letter-spacing:-.02em;margin-bottom:20px;}
+.sti em{font-style:italic;color:var(--gold);}
+.sb{font-size:15px;font-weight:300;line-height:1.85;color:rgba(255,255,255,.58);}
+.dk .sb{color:#555;}
+.dk .sti{color:var(--navy);}
+.dk .sti em{color:var(--accent);}
+/* PROBLEM */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:72px;}
+.pstats{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.pst{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:36px 28px;transition:all .3s;}
+.pst:hover{background:rgba(200,150,12,.08);transform:translateY(-4px);}
+.pst.big{grid-column:1/-1;background:rgba(200,150,12,.06);border-color:rgba(200,150,12,.2);}
+.psn{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:6px;}
+.psl{font-size:12px;color:rgba(255,255,255,.45);line-height:1.55;}
+.bars{margin-top:36px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);padding:28px;}
+.btl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:18px;}
+.brow{display:flex;align-items:center;gap:14px;margin-bottom:12px;}
+.bn{font-size:11.5px;color:rgba(255,255,255,.45);width:148px;flex-shrink:0;}
+.btr{flex:1;height:7px;background:rgba(255,255,255,.05);border-radius:4px;overflow:hidden;}
+.bf{height:100%;border-radius:4px;width:0;transition:width 1.6s cubic-bezier(.25,.46,.45,.94);}
+.bf.g{background:var(--gold);}
+.bf.s{background:rgba(255,255,255,.18);}
+.bv{font-size:11.5px;font-weight:600;width:34px;color:var(--gold);}
+.bvs{font-size:11.5px;font-weight:600;width:34px;color:rgba(255,255,255,.4);}
+.pq{border-left:2px solid var(--gold);padding:10px 0 10px 22px;margin:28px 0;}
+.pqt{font-family:'Playfair Display',serif;font-size:20px;font-style:italic;color:rgba(255,255,255,.7);line-height:1.45;}
+/* CLUSTERS */
+.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin:40px 0;}
+.cl{background:#fff;padding:16px 14px;font-size:11.5px;color:#555;line-height:1.4;border:1px solid #eee;transition:all .22s;cursor:default;position:relative;overflow:hidden;}
+.cl::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .22s;}
+.cl:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+.cl:hover::after{transform:scaleX(1);}
+.pk{background:var(--navy);padding:36px 44px;display:flex;align-items:center;gap:44px;margin-top:2px;border:1px solid rgba(255,255,255,.07);}
+.pkn{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;color:var(--gold);line-height:1;flex-shrink:0;}
+.pkt{font-size:14px;font-weight:600;color:#fff;margin-bottom:6px;}
+.pkb{font-size:13px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.7;}
+/* WHY */
+.wgrid{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:60px;}
+.wc{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:36px 32px;transition:all .3s;position:relative;overflow:hidden;}
+.wc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s;}
+.wc:hover{background:rgba(255,255,255,.06);transform:translateY(-4px);}
+.wc:hover::before{transform:scaleX(1);}
+.wcn{font-family:'Playfair Display',serif;font-size:44px;font-weight:900;color:rgba(200,150,12,.15);line-height:1;margin-bottom:14px;}
+.wct{font-size:14px;font-weight:600;margin-bottom:8px;}
+.wcb{font-size:13px;font-weight:300;color:rgba(255,255,255,.48);line-height:1.7;}
+.pqg{background:var(--gold);padding:52px 60px;margin-top:3px;text-align:center;}
+.pqgt{font-family:'Playfair Display',serif;font-size:26px;font-style:italic;color:var(--navy);line-height:1.4;}
+/* BENEFITS */
+.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:60px;}
+.bc{background:#fff;border:1px solid #eee;padding:36px 28px;transition:all .3s;position:relative;overflow:hidden;cursor:default;}
+.bc::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--gold);transform:scaleY(0);transform-origin:bottom;transition:transform .35s;}
+.bc:hover{transform:translateY(-6px);box-shadow:0 18px 52px rgba(13,27,75,.12);}
+.bc:hover::before{transform:scaleY(1);}
+.bci{font-size:30px;margin-bottom:18px;display:block;}
+.bct{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:8px;}
+.bcb{font-size:13px;font-weight:300;color:#666;line-height:1.7;}
+.ctw{margin-top:56px;}
+.ctl{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#aaa;margin-bottom:16px;}
+.ctps{display:flex;flex-wrap:wrap;gap:9px;}
+.cp2{border:1.5px solid #ddd;padding:11px 18px;font-size:12.5px;color:#555;text-decoration:none;transition:all .22s;font-weight:500;display:inline-block;}
+.cp2:hover{background:var(--navy);color:#fff;border-color:var(--navy);transform:translateY(-2px);}
+.cp2 strong{color:var(--accent);}
+.cp2:hover strong{color:var(--gold);}
+/* CHARTS */
+.chgrid{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:60px;}
+.cp3{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);padding:36px;}
+.cpw{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);padding:36px;margin-top:3px;}
+.cpl{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:22px;}
+canvas{max-height:240px;display:block;}
+/* COMPARISON */
+.ctab{width:100%;border-collapse:collapse;margin-top:48px;}
+.ctab th{padding:14px 22px;text-align:left;font-size:10px;letter-spacing:.12em;text-transform:uppercase;border-bottom:2px solid #eee;color:#aaa;font-weight:500;}
+.ctab th.cth{color:var(--accent);border-bottom-color:var(--accent);}
+.ctab td{padding:16px 22px;border-bottom:1px solid #eee;font-size:13.5px;font-weight:300;color:#444;vertical-align:top;line-height:1.5;transition:background .2s;}
+.ctab tr:hover td{background:#f4f4f2;}
+.ctab td.cat{font-weight:700;color:var(--navy);font-size:12px;}
+.ctab td.ctd{color:var(--accent);font-weight:500;}
+.ccl{margin-top:3px;background:var(--navy);color:#fff;padding:44px 52px;text-align:center;}
+.cclt{font-family:'Playfair Display',serif;font-size:26px;font-style:italic;line-height:1.4;color:rgba(255,255,255,.8);}
+/* IMPLEMENTATION */
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:60px;}
+.phase{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:36px 28px;position:relative;overflow:hidden;transition:background .3s;}
+.phase:hover{background:rgba(255,255,255,.07);}
+.phb{position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);}
+.phn{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;color:rgba(200,150,12,.1);line-height:1;margin-bottom:6px;}
+.phy{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(200,150,12,.55);margin-bottom:6px;}
+.pht{font-size:18px;font-weight:600;margin-bottom:22px;}
+.phi{list-style:none;}
+.phi li{font-size:12.5px;font-weight:300;color:rgba(255,255,255,.5);padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);line-height:1.4;display:flex;gap:9px;align-items:flex-start;}
+.phi li:last-child{border-bottom:none;}
+.phi li::before{content:'→';color:var(--gold);flex-shrink:0;font-size:11px;margin-top:2px;}
+.crw{margin-top:52px;}
+.crl{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:16px;}
+.crps{display:flex;flex-wrap:wrap;gap:9px;}
+.crp{border:1px solid rgba(255,255,255,.12);padding:9px 16px;font-size:12px;color:rgba(255,255,255,.5);text-decoration:none;transition:all .22s;display:inline-block;}
+.crp:hover{background:var(--gold);color:var(--navy);border-color:var(--gold);transform:translateY(-2px);}
+/* DISTRICT */
+.dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:60px;}
+.dc{background:#fff;border:1px solid #eee;padding:32px 26px;transition:all .3s;position:relative;overflow:hidden;}
+.dc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s;}
+.dc:hover{box-shadow:0 14px 44px rgba(13,27,75,.1);transform:translateY(-4px);}
+.dc:hover::after{transform:scaleX(1);}
+.dci{font-size:26px;margin-bottom:14px;}
+.dct{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:7px;}
+.dcb{font-size:13px;font-weight:300;color:#666;line-height:1.7;}
+.dpq{background:var(--navy);color:#fff;padding:52px;margin-top:2px;text-align:center;}
+.dpqt{font-family:'Playfair Display',serif;font-size:26px;font-style:italic;color:var(--gold);line-height:1.4;}
+/* ASK */
+.astps{margin-top:60px;display:flex;flex-direction:column;gap:3px;}
+.astp{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:36px 44px;display:grid;grid-template-columns:72px 1fr;gap:36px;align-items:start;transition:background .3s,transform .3s;}
+.astp:hover{background:rgba(255,255,255,.07);transform:translateX(8px);}
+.asn{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:rgba(200,150,12,.18);line-height:1;}
+.ast{font-size:16px;font-weight:600;margin-bottom:7px;}
+.asb{font-size:13.5px;font-weight:300;color:rgba(255,255,255,.52);line-height:1.7;}
+
+/* ======= MINI QUIZ ======= */
+.quiz-section{background:#0a1540;padding:110px 60px;}
+.quiz-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);padding:52px;max-width:760px;margin:50px auto 0;}
+.quiz-header{text-align:center;margin-bottom:44px;}
+.quiz-q{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;line-height:1.4;margin-bottom:28px;min-height:60px;}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px;}
+.qopt{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);padding:16px 20px;font-size:14px;color:rgba(255,255,255,.75);cursor:pointer;transition:all .2s;text-align:left;font-family:'DM Sans',sans-serif;}
+.qopt:hover{background:rgba(200,150,12,.12);border-color:rgba(200,150,12,.4);color:#fff;}
+.qopt.correct{background:rgba(0,200,100,.15);border-color:rgba(0,200,100,.5);color:#6effa0;}
+.qopt.wrong{background:rgba(255,60,60,.12);border-color:rgba(255,60,60,.4);color:#ff8080;}
+.qopt:disabled{cursor:default;}
+.quiz-feedback{min-height:44px;font-size:14px;font-weight:500;text-align:center;padding:12px;border-radius:2px;margin-bottom:16px;}
+.quiz-next{background:var(--gold);color:var(--navy);border:none;padding:13px 32px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;display:block;margin:0 auto;transition:transform .2s,box-shadow .2s;}
+.quiz-next:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(200,150,12,.4);}
+.quiz-prog{display:flex;gap:6px;justify-content:center;margin-bottom:28px;}
+.qp-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.15);transition:background .3s;}
+.qp-dot.done{background:var(--gold);}
+.qp-dot.curr{background:rgba(200,150,12,.5);transform:scale(1.3);}
+.quiz-result{text-align:center;display:none;}
+.qr-score{font-family:'Playfair Display',serif;font-size:80px;font-weight:900;color:var(--gold);line-height:1;}
+.qr-label{font-size:16px;font-weight:300;color:rgba(255,255,255,.6);margin:8px 0 24px;}
+.qr-msg{font-size:18px;font-weight:500;margin-bottom:28px;}
+.quiz-restart{background:transparent;border:1.5px solid var(--gold);color:var(--gold);padding:12px 28px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.quiz-restart:hover{background:var(--gold);color:var(--navy);}
+
+/* ======= SPIN THE WHEEL ======= */
+.spin-section{background:var(--navy);padding:110px 60px;}
+.spin-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:60px;}
+.wheel-wrap{position:relative;display:flex;flex-direction:column;align-items:center;gap:24px;}
+#wheelCanvas{border-radius:50%;box-shadow:0 0 60px rgba(200,150,12,.25);cursor:pointer;}
+.spin-btn{background:var(--gold);color:var(--navy);border:none;padding:16px 40px;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .2s;font-family:'DM Sans',sans-serif;}
+.spin-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 28px rgba(200,150,12,.5);}
+.spin-btn:disabled{opacity:.5;cursor:not-allowed;}
+.wheel-pointer{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:28px;filter:drop-shadow(0 2px 8px rgba(200,150,12,.6));}
+.spin-result{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:36px;display:flex;flex-direction:column;justify-content:center;min-height:260px;}
+.sr-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,150,12,.6);margin-bottom:14px;}
+.sr-fact{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:#fff;line-height:1.5;min-height:80px;}
+.sr-spin-hint{font-size:13px;color:rgba(255,255,255,.3);margin-top:20px;}
+
+/* ======= WASD GAME ======= */
+.game-section{background:#060f30;padding:110px 60px;}
+.game-wrap{margin-top:60px;position:relative;}
+.game-arena{width:100%;max-width:900px;height:480px;background:linear-gradient(135deg,#0a1540,#0d1b4b);border:1px solid rgba(200,150,12,.2);position:relative;overflow:hidden;margin:0 auto;cursor:none;}
+.game-arena::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(200,150,12,.04) 1px,transparent 1px);background-size:32px 32px;}
+.game-character{position:absolute;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:30px;z-index:10;user-select:none;filter:drop-shadow(0 0 10px rgba(200,150,12,.7));animation:studentBob .5s ease-in-out infinite alternate;}
+@keyframes studentBob{from{transform:translateY(0);}to{transform:translateY(-3px);}}
+.game-item{position:absolute;font-size:22px;cursor:default;animation:float2 2s ease-in-out infinite;user-select:none;z-index:8;}
+.game-item.collected{animation:pop .4s ease forwards;}
+.game-hud{background:rgba(13,27,75,.9);padding:14px 28px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(200,150,12,.2);}
+.hud-score{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold);}
+.hud-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.hud-msg{font-size:13px;color:rgba(255,255,255,.6);font-style:italic;min-height:18px;}
+.game-controls{display:flex;justify-content:center;gap:8px;margin-top:20px;}
+.gc-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;width:44px;height:44px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.gc-btn:hover,.gc-btn.pressed{background:rgba(200,150,12,.2);border-color:rgba(200,150,12,.4);}
+.game-hint{text-align:center;margin-top:14px;font-size:12px;color:rgba(255,255,255,.3);letter-spacing:.04em;}
+
+/* CLOSING */
+.closing{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--navy);position:relative;overflow:hidden;text-align:center;padding:80px 60px;}
+.cbg{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(26,47,122,.7),var(--navy) 68%);}
+.cc{position:relative;z-index:2;}
+.ctag{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:40px;}
+.ctt{font-family:'Playfair Display',serif;font-size:clamp(44px,7vw,96px);font-weight:900;line-height:.94;letter-spacing:-.03em;margin-bottom:36px;}
+.ctt em{font-style:italic;color:var(--gold);}
+.cr2{width:56px;height:2px;background:var(--gold);margin:0 auto 36px;}
+.ct{font-size:17px;font-weight:300;color:rgba(255,255,255,.52);line-height:1.82;max-width:580px;margin:0 auto 56px;}
+.cta2{background:var(--gold);color:var(--navy);padding:18px 44px;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:transform .2s,box-shadow .2s;}
+.cta2:hover{transform:translateY(-3px);box-shadow:0 14px 44px rgba(200,150,12,.5);}
+.cm{margin-top:72px;font-size:11px;color:rgba(255,255,255,.18);letter-spacing:.06em;}
+footer{background:#070e26;padding:36px 60px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.05);}
+.ft{font-size:11px;color:rgba(255,255,255,.2);}
+@keyframes fu{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+@keyframes tk{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+@keyframes sa{0%,100%{opacity:0;transform:translateY(-8px);}50%{opacity:1;transform:translateY(0);}}
+@keyframes float2{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+@keyframes pop{0%{transform:scale(1);opacity:1;}50%{transform:scale(1.5);opacity:.5;}100%{transform:scale(0);opacity:0;}}
+</style>
+</head>
+<body>
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
+<div class="pdots" id="pdts">
+  <button class="pd act" data-s="hero"></button>
+  <button class="pd" data-s="problem"></button>
+  <button class="pd" data-s="what"></button>
+  <button class="pd" data-s="why"></button>
+  <button class="pd" data-s="benefits"></button>
+  <button class="pd" data-s="data"></button>
+  <button class="pd" data-s="compare"></button>
+  <button class="pd" data-s="impl"></button>
+  <button class="pd" data-s="district"></button>
+  <button class="pd" data-s="ask"></button>
+  <button class="pd" data-s="quiz"></button>
+  <button class="pd" data-s="spin"></button>
+  <button class="pd" data-s="game"></button>
+  <button class="pd" data-s="closing"></button>
+</div>
+<nav id="nav">
+  <div class="nl">CTE @ Harmony</div>
+  <div class="nlinks">
+    <a href="#problem">Problem</a>
+    <a href="#what">What is CTE</a>
+    <a href="#why">Why Harmony</a>
+    <a href="#benefits">Benefits</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#spin">Wheel</a>
+    <a href="#game">Game</a>
+  </div>
+  <a href="#ask" class="ncta">View Proposal</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero" style="display:flex;align-items:center;justify-content:center;padding:0;min-height:100vh;">
+  <canvas id="pc"></canvas>
+  <div class="hbg"></div>
+  <div class="hc">
+    <div class="htag">A Proposal to Central Office</div>
+    <h1 class="ht">Career &amp;<br><em>Technical</em>Education.</h1>
+    <p class="hs">A formal proposal to begin offering CTE programs at Harmony School of Innovation, Sugar Land &mdash; ensuring students receive the qualifications, experience, and knowledge they deserve before leaving high school.</p>
+    <div class="hbtns">
+      <a href="#problem" class="bp">Read the Proposal</a>
+      <a href="#ask" class="bo">View Our Ask</a>
+    </div>
+  </div>
+  <div class="sh"><div class="sl"></div>Scroll</div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="tt">
+    <div class="ti"><div class="tid"></div>93% CTE Graduation Rate</div>
+    <div class="ti"><div class="tid"></div>16 Career Clusters</div>
+    <div class="ti"><div class="tid"></div>$0 Cost for Dual Enrollment</div>
+    <div class="ti"><div class="tid"></div>Federally Funded &middot; Perkins V 2018</div>
+    <div class="ti"><div class="tid"></div>Harmony School of Innovation Sugar Land</div>
+    <div class="ti"><div class="tid"></div>College + Career Ready</div>
+    <div class="ti"><div class="tid"></div>93% CTE Graduation Rate</div>
+    <div class="ti"><div class="tid"></div>16 Career Clusters</div>
+    <div class="ti"><div class="tid"></div>$0 Cost for Dual Enrollment</div>
+    <div class="ti"><div class="tid"></div>Federally Funded &middot; Perkins V 2018</div>
+    <div class="ti"><div class="tid"></div>Harmony School of Innovation Sugar Land</div>
+    <div class="ti"><div class="tid"></div>College + Career Ready</div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="sec" id="problem" style="background:var(--navy);">
+  <div class="si"><div class="pgrid">
+    <div class="rl">
+      <div class="slb">01 &mdash; The Problem</div>
+      <h2 class="sti">Our students are <em>missing out.</em></h2>
+      <p class="sb">Students at Harmony School of Innovation Sugar Land, although academically strong, graduate without the workplace skills, industry certifications, and experiential learning that students finish with at other schools in Texas. That is a significant gap worth addressing.</p>
+      <p class="sb" style="margin-top:18px;">Today's students need more than solid test scores and good grades. When submitting applications for jobs and college, they need to show evidence of their skills and certifications. With each year that passes without CTE, another graduating class misses out on opportunities that could shape their futures.</p>
+      <div class="pq"><div class="pqt">"Missed opportunities to gain certifications, college credit, and work experience continues to be a reality for each graduating class."</div></div>
+      <div class="bars">
+        <div class="btl">Graduation Rate Gap</div>
+        <div class="brow"><div class="bn">National Average</div><div class="btr"><div class="bf s" data-w="85"></div></div><div class="bvs">85%</div></div>
+        <div class="brow"><div class="bn">CTE Concentrators</div><div class="btr"><div class="bf g" data-w="93"></div></div><div class="bv">93%</div></div>
+        <div class="brow"><div class="bn">CTE Completers</div><div class="btr"><div class="bf g" data-w="97"></div></div><div class="bv">97%</div></div>
+      </div>
+    </div>
+    <div class="rr">
+      <div class="pstats">
+        <div class="pst big"><div class="psn counter" data-t="93">0</div><div class="psl">% graduation rate for CTE concentrators vs. 85% national average without CTE</div></div>
+        <div class="pst"><div class="psn counter" data-t="16">0</div><div class="psl">career clusters covering every major industry in today's economy</div></div>
+        <div class="pst"><div class="psn" style="font-size:52px;">$0</div><div class="psl">cost to students for dual enrollment college credit through CTE</div></div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- WHAT IS CTE -->
+<section class="sec dk" id="what" style="background:var(--off);">
+  <div class="si">
+    <div class="rv">
+      <div class="slb">02 &mdash; Background</div>
+      <h2 class="sti">Not your grandfather's <em>vocational class.</em></h2>
+      <p class="sb">Career and Technical Education is a modern method of teaching that is integrated with academic learning and includes hands-on activities. It is a far cry from vocational training and guides students with a college-and-career-ready pathway. Results from the last several decades speak for themselves.</p>
+      <p class="sb" style="margin-top:16px;">CTE programs are funded due to the <strong>Carl D. Perkins Career and Technical Education Act</strong>, reauthorized in 2018. The act stipulates that schools must fund and support CTE programs and that they serve all students equitably.</p>
+    </div>
+    <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#aaa;margin:52px 0 16px;" class="rv">The 16 Career Clusters &mdash; hover to highlight</div>
+    <div class="cgrid rv">
+      <div class="cl">Agriculture, Food &amp; Natural Resources</div><div class="cl">Architecture &amp; Construction</div>
+      <div class="cl">Arts, A/V Technology &amp; Comm.</div><div class="cl">Business Management &amp; Admin.</div>
+      <div class="cl">Education &amp; Training</div><div class="cl">Finance</div>
+      <div class="cl">Government &amp; Public Administration</div><div class="cl">Health Science</div>
+      <div class="cl">Hospitality &amp; Tourism</div><div class="cl">Human Services</div>
+      <div class="cl">Information Technology</div><div class="cl">Law, Public Safety &amp; Security</div>
+      <div class="cl">Manufacturing</div><div class="cl">Marketing</div>
+      <div class="cl">STEM</div><div class="cl">Transportation &amp; Logistics</div>
+    </div>
+    <div class="pk rv">
+      <div class="pkn">2018</div>
+      <div><div class="pkt">Carl D. Perkins Career and Technical Education Act &mdash; Perkins V</div><div class="pkb">The federal law that funds and governs all CTE programs. It requires schools to serve every student equitably &mdash; including students with disabilities, English learners, low-income families, foster youth, and students preparing for nontraditional careers.</div></div>
+    </div>
+    <p class="sb rv" style="margin-top:36px;">In addition to Clusters, students will also see <strong>Pathways</strong> &mdash; defined by multi-year course sequences known as Programs of Study. A student who takes an adequate number of courses becomes a <strong>CTE Concentrator</strong>. A student who completes the full sequence becomes a <strong>CTE Completer</strong> and often leaves with industry credentials in hand.</p>
+  </div>
+</section>
+
+<!-- WHY HARMONY -->
+<section class="sec" id="why" style="background:var(--navy);">
+  <div class="si">
+    <div class="rv"><div class="slb">03 &mdash; The Alignment</div><h2 class="sti">CTE fits Harmony <em>perfectly.</em></h2><p class="sb">Preparing students for college, careers, and life by equipping them with the necessary tools through a demanding, STEM-focused curriculum is the mission of Harmony Public Schools. The addition of CTE would serve as a meaningful asset to that mission.</p></div>
+    <div class="wgrid">
+      <div class="wc rv"><div class="wcn">01</div><div class="wct">STEM Already Lives Here</div><div class="wcb">Harmony School of Innovation already emphasizes Science, Technology, Engineering, and Mathematics. CTE in IT, Health Science, Engineering, and Business Management extends that identity into real credentials and career pathways.</div></div>
+      <div class="wc rv" style="transition-delay:.1s"><div class="wcn">02</div><div class="wct">Mission Alignment</div><div class="wcb">Harmony's mission is college and career readiness. CTE delivers exactly that &mdash; dual enrollment, certifications, and work-based learning that makes a Harmony diploma even more powerful.</div></div>
+      <div class="wc rv" style="transition-delay:.2s"><div class="wcn">03</div><div class="wct">Equity Built In</div><div class="wcb">Perkins V mandates equitable access for all students. That means CTE directly supports Harmony's commitment to serve every student regardless of background, ability, or income.</div></div>
+      <div class="wc rv" style="transition-delay:.3s"><div class="wcn">04</div><div class="wct">Flagship Potential</div><div class="wcb">Schools that add CTE to a STEM-focused curriculum see increased enrollment and stronger community partnerships. Harmony Sugar Land could be a flagship CTE campus for the entire district.</div></div>
+    </div>
+    <div class="pqg rv"><div class="pqgt">"The introduction of CTE programs truly enhances the existing values of Harmony &mdash; it is the natural next step in fulfilling them."</div></div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="sec dk" id="benefits" style="background:var(--off);">
+  <div class="si">
+    <div class="rv"><div class="slb">04 &mdash; Student Benefits</div><h2 class="sti">What students <em>actually gain.</em></h2><p class="sb">CTE's advantages for high schoolers are clear, evident, and life-changing &mdash; not just empty promises, but results backed by research in thousands of high schools across the country.</p></div>
+    <div class="bgrid">
+      <div class="bc rv"><span class="bci">&#127891;</span><div class="bct">Industry Credentials</div><div class="bcb">Students earn diplomas with real recognized qualifications &mdash; CompTIA A+, CNA, OSHA 10, Adobe, Microsoft Office Specialist &mdash; BEFORE they turn 18.</div></div>
+      <div class="bc rv" style="transition-delay:.1s"><span class="bci">&#127979;</span><div class="bct">Free College Credit</div><div class="bcb">High school students can earn college credits for free through dual enrollment &mdash; a savings of thousands of dollars in tuition for families.</div></div>
+      <div class="bc rv" style="transition-delay:.2s"><span class="bci">&#128188;</span><div class="bct">Real Work Experience</div><div class="bcb">Internships, job shadowing, and apprenticeships give students professional experience before graduation and a resume before they need one.</div></div>
+      <div class="bc rv" style="transition-delay:.3s"><span class="bci">&#127942;</span><div class="bct">Leadership &amp; Competition</div><div class="bcb">CTSOs like HOSA, FBLA, DECA, SkillsUSA, and TSA let students compete at regional, state, and national levels and win scholarships.</div></div>
+      <div class="bc rv" style="transition-delay:.4s"><span class="bci">&#128301;</span><div class="bct">Career Exploration</div><div class="bcb">Students determine their career interests &mdash; reducing chances of changing their major, leaving school, or spending tuition on the wrong path.</div></div>
+      <div class="bc rv" style="transition-delay:.5s"><span class="bci">&#128640;</span><div class="bct">Every Direction Open</div><div class="bcb">CTE empowers students toward college, career, military, or entrepreneurship. It doesn't narrow their options &mdash; it broadens them considerably.</div></div>
+    </div>
+    <div class="ctw rv">
+      <div class="ctl">Student Organizations (CTSOs) &mdash; click to visit official site</div>
+      <div class="ctps">
+        <a class="cp2" href="https://www.deca.org" target="_blank"><strong>DECA</strong> &middot; Marketing &amp; Business</a>
+        <a class="cp2" href="https://www.hosa.org" target="_blank"><strong>HOSA</strong> &middot; Health Science</a>
+        <a class="cp2" href="https://www.skillsusa.org" target="_blank"><strong>SkillsUSA</strong> &middot; Trade &amp; Technical</a>
+        <a class="cp2" href="https://www.fbla.org" target="_blank"><strong>FBLA</strong> &middot; Future Business Leaders</a>
+        <a class="cp2" href="https://www.tsaweb.org" target="_blank"><strong>TSA</strong> &middot; Technology</a>
+        <a class="cp2" href="https://www.ffa.org" target="_blank"><strong>FFA</strong> &middot; Agriculture</a>
+        <a class="cp2" href="https://www.fccla.org" target="_blank"><strong>FCCLA</strong> &middot; Family &amp; Consumer Sciences</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHARTS -->
+<section class="sec" id="data" style="background:var(--navy);">
+  <div class="si">
+    <div class="rv"><div class="slb">05 &mdash; The Data</div><h2 class="sti">The numbers <em>don't lie.</em></h2><p class="sb">CTE programs are proven by data across thousands of schools nationwide. Every metric shows meaningful improvement with CTE. Hover over charts for details.</p></div>
+    <div class="chgrid">
+      <div class="cp3 rv"><div class="cpl">Graduation Rate Comparison</div><canvas id="gc"></canvas></div>
+      <div class="cp3 rv" style="transition-delay:.15s"><div class="cpl">Post-Graduation Pathways CTE Prepares For</div><canvas id="pc2"></canvas></div>
+    </div>
+    <div class="cpw rv"><div class="cpl">Student Outcomes: With CTE vs. Without CTE (%)</div><canvas id="oc"></canvas></div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="sec dk" id="compare" style="background:var(--off);">
+  <div class="si">
+    <div class="rv"><div class="slb">06 &mdash; The Comparison</div><h2 class="sti">CTE vs. <em>traditional classes.</em></h2><p class="sb">CTE doesn't replace the core academic classes &mdash; it supplements them. And most importantly, it makes a student's education more valuable. Here's what sets CTE apart from a traditional education path.</p></div>
+    <table class="ctab rv">
+      <thead><tr><th style="width:22%">Category</th><th style="width:39%">Traditional Education</th><th class="cth" style="width:39%">CTE Education</th></tr></thead>
+      <tbody>
+        <tr><td class="cat">Learning Style</td><td>Lectures, textbooks, passive theory</td><td class="ctd">Hands-on labs, projects, real industry tools</td></tr>
+        <tr><td class="cat">Primary Goal</td><td>Academic knowledge, college readiness</td><td class="ctd">College AND career readiness simultaneously</td></tr>
+        <tr><td class="cat">Credentials</td><td>High school diploma only</td><td class="ctd">Diploma + certifications + college credit</td></tr>
+        <tr><td class="cat">Work Experience</td><td>Rarely structured into coursework</td><td class="ctd">Built into curriculum via internships and WBL</td></tr>
+        <tr><td class="cat">Real-World Skills</td><td>Theoretical &mdash; applied after graduation</td><td class="ctd">Applied during high school in real contexts</td></tr>
+        <tr><td class="cat">Post-Graduation</td><td>Workforce with no prior credentials</td><td class="ctd">Workforce with certifications and experience</td></tr>
+        <tr><td class="cat">Graduation Rate</td><td>~85% national average</td><td class="ctd">~93% for CTE concentrators nationally</td></tr>
+      </tbody>
+    </table>
+    <div class="ccl rv"><div class="cclt">"The benefits of education are not exclusive. Students don't have to choose between academic education or CTE education. Harmony gives them the opportunity to have both."</div></div>
+  </div>
+</section>
+
+<!-- IMPLEMENTATION -->
+<section class="sec" id="impl" style="background:var(--navy);">
+  <div class="si">
+    <div class="rv"><div class="slb">07 &mdash; Implementation</div><h2 class="sti">A gradual, <em>sustainable plan.</em></h2><p class="sb">The implementation of CTE at Harmony School of Innovation can be a gradual process. It will allow the school to create effective, long-lasting programs over time, without placing undue strain on current resources or staff.</p></div>
+    <div class="phases">
+      <div class="phase rv"><div class="phb"></div><div class="phn">01</div><div class="phy">Phase One &middot; Year 1</div><div class="pht">Foundation</div><ul class="phi"><li>Launch Information Technology pathway</li><li>Launch Health Science pathway</li><li>Launch Business Management pathway</li><li>Establish TSA, HOSA &amp; DECA chapters</li><li>Hire certified CTE instructors</li><li>Apply for Perkins V federal funding</li></ul></div>
+      <div class="phase rv" style="transition-delay:.15s"><div class="phb"></div><div class="phn">02</div><div class="phy">Phase Two &middot; Year 2</div><div class="pht">Expansion</div><ul class="phi"><li>Add Engineering &amp; Architecture pathway</li><li>Add Law &amp; Public Safety pathway</li><li>Launch dual enrollment partnerships</li><li>Establish industry advisory committees</li><li>Build work-based learning pipelines</li><li>Begin credential testing on campus</li></ul></div>
+      <div class="phase rv" style="transition-delay:.3s"><div class="phb"></div><div class="phn">03</div><div class="phy">Phase Three &middot; Year 3+</div><div class="pht">Full Program</div><ul class="phi"><li>Add Marketing and Finance pathways</li><li>Expand CTSOs districtwide</li><li>Regional &amp; state competitions</li><li>Full WBL across all clusters</li><li>Harmony as district CTE model</li><li>Annual program review &amp; alignment</li></ul></div>
+    </div>
+    <div class="crw rv">
+      <div class="crl">Sample Credentials Students Could Earn Starting Year One &mdash; click to learn more</div>
+      <div class="crps">
+        <a class="crp" href="https://www.comptia.org/certifications/a" target="_blank">CompTIA A+ &middot; IT</a>
+        <a class="crp" href="https://grow.google/certificates/it-support/" target="_blank">Google IT Support Certificate</a>
+        <a class="crp" href="https://www.comptia.org/certifications/security" target="_blank">Cybersecurity Fundamentals</a>
+        <a class="crp" href="https://www.redcross.org/take-a-class/cna" target="_blank">Certified Nursing Assistant (CNA)</a>
+        <a class="crp" href="https://www.aapc.com/medical-coding/medical-terminology.aspx" target="_blank">Medical Terminology Certification</a>
+        <a class="crp" href="https://certiport.pearsonvue.com/Certifications/Microsoft/MOS/Overview" target="_blank">Microsoft Office Specialist</a>
+        <a class="crp" href="https://www.osha.gov/training/outreach/construction" target="_blank">OSHA 10 Safety Card</a>
+        <a class="crp" href="https://certiport.pearsonvue.com/Certifications/Adobe/ACP/Overview" target="_blank">Adobe Certified Professional</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISTRICT -->
+<section class="sec dk" id="district" style="background:var(--off);">
+  <div class="si">
+    <div class="rv"><div class="slb">08 &mdash; District Benefits</div><h2 class="sti">Beneficial for students. <em>Strategic for Harmony.</em></h2><p class="sb">Adding CTE at Harmony School of Innovation Sugar Land benefits students, and it is also a strategically sound decision for Harmony Public Schools as a district.</p></div>
+    <div class="dgrid">
+      <div class="dc rv"><div class="dci">&#128176;</div><div class="dct">Federal Funding</div><div class="dcb">Perkins V funding goes directly to schools that set up CTE programs, covering equipment, teacher salaries, lab construction, and materials &mdash; at no cost to the district's general fund.</div></div>
+      <div class="dc rv" style="transition-delay:.1s"><div class="dci">&#128200;</div><div class="dct">Enrollment &amp; Retention</div><div class="dcb">Schools that implement effective CTE programs draw in and retain students through graduation. Families in Sugar Land are likely to select Harmony specifically because of CTE.</div></div>
+      <div class="dc rv" style="transition-delay:.2s"><div class="dci">&#11088;</div><div class="dct">Stronger TEA Metrics</div><div class="dcb">The Texas Education Agency measures graduation metrics, credentials earned, and post-secondary placements. CTE positively impacts all three and improves Harmony's state rating.</div></div>
+      <div class="dc rv" style="transition-delay:.3s"><div class="dci">&#129309;</div><div class="dct">Industry Partnerships</div><div class="dcb">Perkins V requirements include having local business professionals on advisory committees &mdash; creating direct partnerships with healthcare, technology, and local businesses.</div></div>
+      <div class="dc rv" style="transition-delay:.4s"><div class="dci">&#127942;</div><div class="dct">District-Wide Model</div><div class="dcb">Harmony School of Innovation Sugar Land has the opportunity to serve as the first flagship CTE campus for Harmony Public Schools &mdash; a model that could benefit the entire district.</div></div>
+      <div class="dc rv" style="transition-delay:.5s"><div class="dci">&#127775;</div><div class="dct">Community Trust</div><div class="dcb">A school that graduates students with actual credentials and work experience fosters a level of community trust that no advertisement can achieve.</div></div>
+    </div>
+    <div class="dpq rv"><div class="dpqt">"With thoughtful implementation, Harmony has the opportunity to become a regional leader in STEM-integrated CTE."</div></div>
+  </div>
+</section>
+
+<!-- ASK -->
+<section class="sec" id="ask" style="background:var(--navy);">
+  <div class="si">
+    <div class="rv"><div class="slb">09 &mdash; Our Request</div><h2 class="sti">What we are <em>respectfully asking.</em></h2><p class="sb">We are respectfully requesting that Harmony Public Schools Central Office consider taking the following steps to begin exploring CTE implementation at Harmony School of Innovation Sugar Land. Each step is thoughtful and achievable, and together they offer a responsible path forward.</p></div>
+    <div class="astps">
+      <div class="astp rv"><div class="asn">01</div><div><div class="ast">Initiate a CTE Feasibility Study</div><div class="asb">Determine which career clusters and pathways best align with our students, community workforce needs, and campus infrastructure.</div></div></div>
+      <div class="astp rv" style="transition-delay:.1s"><div class="asn">02</div><div><div class="ast">Explore Carl D. Perkins Act Funding</div><div class="asb">Begin the formal application process for Perkins V funding &mdash; accessible to all public schools &mdash; which covers start-up costs, equipment, and CTE staffing at no burden to the district.</div></div></div>
+      <div class="astp rv" style="transition-delay:.2s"><div class="asn">03</div><div><div class="ast">Develop a Phased CTE Strategy</div><div class="asb">Collaborate with campus leadership at Harmony School of Innovation Sugar Land to develop a thoughtful, phased CTE strategy with a clear timeline, budget, and accountability measures.</div></div></div>
+      <div class="astp rv" style="transition-delay:.3s"><div class="asn">04</div><div><div class="ast">Recruit Certified CTE Educators</div><div class="asb">Recruit certified CTE teachers and industry experts who can bring real-world expertise and current industry standards into the Harmony classroom.</div></div></div>
+      <div class="astp rv" style="transition-delay:.4s"><div class="asn">05</div><div><div class="ast">Form Industry Advisory Committees</div><div class="asb">Form local Sugar Land and Houston Region business, health, and technology advisory committees to ensure our programs stay aligned with real workforce requirements.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MINI QUIZ -->
+<section class="quiz-section" id="quiz">
+  <div class="si">
+    <div class="rv" style="text-align:center;">
+      <div class="slb" style="justify-content:center;">10 &mdash; Interactive</div>
+      <h2 class="sti">How well do you know <em>CTE?</em></h2>
+      <p class="sb" style="max-width:500px;margin:0 auto;">Test your knowledge with a quick 6-question quiz. See how much you already know about Career and Technical Education!</p>
+    </div>
+    <div class="quiz-box rv">
+      <div id="quizGame">
+        <div class="quiz-header">
+          <div class="quiz-prog" id="quizProg"></div>
+          <div class="quiz-q" id="quizQ"></div>
+        </div>
+        <div class="quiz-opts" id="quizOpts"></div>
+        <div class="quiz-feedback" id="quizFB"></div>
+        <button class="quiz-next" id="quizNext" style="display:none;">Next Question &rarr;</button>
+      </div>
+      <div class="quiz-result" id="quizResult">
+        <div class="qr-score" id="qrScore"></div>
+        <div class="qr-label">out of 6 correct</div>
+        <div class="qr-msg" id="qrMsg"></div>
+        <button class="quiz-restart" id="quizRestart">Play Again</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPIN THE WHEEL -->
+<section class="spin-section" id="spin">
+  <div class="si">
+    <div class="rv" style="text-align:center;">
+      <div class="slb" style="justify-content:center;">11 &mdash; Spin &amp; Learn</div>
+      <h2 class="sti">Spin the <em>CTE Wheel!</em></h2>
+      <p class="sb" style="max-width:500px;margin:0 auto;">Spin the wheel for a random CTE fact or statistic. Every spin reveals something new!</p>
+    </div>
+    <div class="spin-inner rv">
+      <div class="wheel-wrap">
+        <div class="wheel-pointer">&#9660;</div>
+        <canvas id="wheelCanvas" width="320" height="320"></canvas>
+        <button class="spin-btn" id="spinBtn">SPIN IT!</button>
+      </div>
+      <div class="spin-result">
+        <div class="sr-label">CTE Fact</div>
+        <div class="sr-fact" id="spinFact">Click SPIN IT to reveal a CTE fact or statistic!</div>
+        <div class="sr-spin-hint">Every spin reveals a new fact. Give it a few tries!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WASD GAME -->
+<section class="game-section" id="game">
+  <div class="si">
+    <div class="rv" style="text-align:center;">
+      <div class="slb" style="justify-content:center;">12 &mdash; Mini Game</div>
+      <h2 class="sti">Collect the <em>credentials!</em></h2>
+      <p class="sb" style="max-width:540px;margin:0 auto 40px;">Move your student character around the field using WASD or the buttons below and collect as many CTE credentials as you can! Each one you grab is a real certification students can earn.</p>
+    </div>
+    <div class="game-wrap rv">
+      <div class="game-hud">
+        <div><div class="hud-label">Score</div><div class="hud-score" id="gameScore">0</div></div>
+        <div><div class="hud-msg" id="gameMsg">Use WASD to move and collect credentials!</div></div>
+        <div><div class="hud-label">Collected</div><div class="hud-score" id="gameCollected">0 / 0</div></div>
+      </div>
+      <div class="game-arena" id="gameArena">
+        <div class="game-character" id="gameChar">👨🏼‍🎓</div>
+      </div>
+      <div class="game-controls">
+        <div style="display:grid;grid-template-columns:44px 44px 44px;grid-template-rows:44px 44px;gap:4px;">
+          <div></div>
+          <button class="gc-btn" id="btnW" data-key="w">&#8593;</button>
+          <div></div>
+          <button class="gc-btn" id="btnA" data-key="a">&#8592;</button>
+          <button class="gc-btn" id="btnS" data-key="s">&#8595;</button>
+          <button class="gc-btn" id="btnD" data-key="d">&#8594;</button>
+        </div>
+      </div>
+      <div class="game-hint">Use W A S D on your keyboard or the buttons above &mdash; collect all glowing credentials to win! 🏆</div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closing" id="closing">
+  <div class="cbg"></div>
+  <div class="cc rv">
+    <div class="ctag">Conclusion &middot; Harmony School of Innovation, Sugar Land</div>
+    <h2 class="ctt">Our students<br>are <em>ready.</em><br>Are we?</h2>
+    <div class="cr2"></div>
+    <p class="ct">Career and Technical Education is not a luxury &mdash; it is a necessity for every high school student navigating today's world. Students at Harmony School of Innovation Sugar Land are talented, driven, and full of potential, and potential alone is not enough in a world that rewards skills, credentials, and experience. CTE provides students with real options, real experience, real skills, and real certifications. Each year we wait, we continue to lose opportunities that these students deserve more than anyone else. The federal funding is available. The framework is ready. We respectfully ask Central Office to help us take the next step together.</p>
+    <a href="#hero" class="cta2">Back to Top</a>
+    <div class="cm">Submitted to Harmony Public Schools Central Office &mdash; Harmony School of Innovation, Sugar Land</div>
+  </div>
+</section>
+<footer>
+  <div class="ft">CTE Proposal &mdash; Harmony School of Innovation Sugar Land</div>
+  <div class="ft">Submitted to Harmony Public Schools Central Office</div>
+</footer>
+
+<script>
+// ── CURSOR (fast ring) ──
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=window.innerWidth/2,my=window.innerHeight/2;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';curR.style.left=mx+'px';curR.style.top=my+'px';});
+document.querySelectorAll('a,button,.cl,.wc,.bc,.dc,.astp,.pst,.phase,.qopt').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{curR.style.width='52px';curR.style.height='52px';curR.style.borderColor='rgba(200,150,12,1)';});
+  el.addEventListener('mouseleave',()=>{curR.style.width='34px';curR.style.height='34px';curR.style.borderColor='rgba(200,150,12,.7)';});
+});
+
+// ── NAV ──
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('sc',window.scrollY>60);updateDots();});
+
+// ── PARTICLES ──
+const pc=document.getElementById('pc'),ctx=pc.getContext('2d');
+pc.width=window.innerWidth;pc.height=window.innerHeight;
+window.addEventListener('resize',()=>{pc.width=window.innerWidth;pc.height=window.innerHeight;});
+const pts=Array.from({length:80},()=>({x:Math.random()*pc.width,y:Math.random()*pc.height,r:Math.random()*1.4+.3,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,a:Math.random()*.4+.1}));
+(function drawP(){ctx.clearRect(0,0,pc.width,pc.height);pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=pc.width;if(p.x>pc.width)p.x=0;if(p.y<0)p.y=pc.height;if(p.y>pc.height)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(200,150,12,'+p.a+')';ctx.fill();});requestAnimationFrame(drawP);})();
+
+// ── SCROLL REVEAL ──
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});},{threshold:.08});
+document.querySelectorAll('.rv,.rl,.rr').forEach(el=>obs.observe(el));
+
+// ── COUNTERS ──
+const cobs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const el=e.target,t=+el.dataset.t;let c=0;const s=()=>{c=Math.min(c+Math.ceil(t/55),t);el.textContent=c;if(c<t)requestAnimationFrame(s);};s();cobs.unobserve(el);}});},{threshold:.3});
+document.querySelectorAll('.counter').forEach(c=>cobs.observe(c));
+
+// ── BARS ──
+const bobs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.style.width=e.target.dataset.w+'%';bobs.unobserve(e.target);}});},{threshold:.2});
+document.querySelectorAll('.bf').forEach(b=>bobs.observe(b));
+
+// ── PROGRESS DOTS ──
+const secs=['hero','problem','what','why','benefits','data','compare','impl','district','ask','quiz','spin','game','closing'];
+const dots=document.querySelectorAll('.pd');
+dots.forEach((d,i)=>{d.addEventListener('click',()=>{const s=document.getElementById(secs[i]);if(s)s.scrollIntoView({behavior:'smooth'});});});
+function updateDots(){const sy=window.scrollY+window.innerHeight/2;dots.forEach((d,i)=>{const s=document.getElementById(secs[i]);if(!s)return;const t=s.offsetTop,b=t+s.offsetHeight;d.classList.toggle('act',sy>=t&&sy<b);});}
+
+// ── CHARTS ──
+const G='#c8960c',S='rgba(255,255,255,.12)',F={family:'DM Sans',size:11};
+new Chart(document.getElementById('gc'),{type:'bar',data:{labels:['National Avg','CTE Concentrators','CTE Completers'],datasets:[{label:'Graduation Rate',data:[85,93,97],backgroundColor:[S,G,G],borderWidth:0,borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.raw+'% graduation rate'}}},scales:{y:{min:75,max:100,ticks:{callback:v=>v+'%',font:F,color:'rgba(255,255,255,.4)'},grid:{color:'rgba(255,255,255,.05)'}},x:{ticks:{font:F,color:'rgba(255,255,255,.4)'},grid:{display:false}}}}});
+new Chart(document.getElementById('pc2'),{type:'doughnut',data:{labels:['College','Career / Workforce','Military','Entrepreneurship'],datasets:[{data:[42,35,13,10],backgroundColor:['#1a2f7a',G,'#4a5bbf','rgba(255,255,255,.15)'],borderWidth:2,borderColor:'#0d1b4b'}]},options:{responsive:true,cutout:'60%',plugins:{legend:{position:'bottom',labels:{font:F,color:'rgba(255,255,255,.55)',padding:12}},tooltip:{callbacks:{label:c=>' '+c.label+': '+c.raw+'%'}}}}});
+new Chart(document.getElementById('oc'),{type:'bar',data:{labels:['Graduation Rate','Employment','College Enrollment','Credentials','Engagement','Earnings'],datasets:[{label:'Without CTE',data:[85,62,58,10,58,55],backgroundColor:'rgba(255,255,255,.1)',borderWidth:0,borderRadius:3},{label:'With CTE',data:[93,81,74,72,84,78],backgroundColor:G,borderWidth:0,borderRadius:3}]},options:{responsive:true,plugins:{legend:{labels:{font:F,color:'rgba(255,255,255,.6)'}}},scales:{y:{max:100,ticks:{callback:v=>v+'%',font:F,color:'rgba(255,255,255,.4)'},grid:{color:'rgba(255,255,255,.05)'}},x:{ticks:{font:{family:'DM Sans',size:10},color:'rgba(255,255,255,.4)'},grid:{display:false}}}}});
+
+// ── QUIZ ──
+const qs=[
+  {q:"What does CTE stand for?",opts:["Creative Technology Education","Career and Technical Education","College Training Experience","Certification and Trade Enrollment"],ans:1},
+  {q:"What federal law funds CTE programs?",opts:["No Child Left Behind","Every Student Succeeds Act","Carl D. Perkins Act","Workforce Innovation and Opportunity Act"],ans:2},
+  {q:"What is the graduation rate for CTE concentrators?",opts:["78%","85%","90%","93%"],ans:3},
+  {q:"How many Career Clusters does CTE have?",opts:["8","12","16","20"],ans:2},
+  {q:"What is a CTE Completer?",opts:["A student who passes their finals","A student who finishes a full CTE program of study","A student who earns a college degree","A student who completes all AP courses"],ans:1},
+  {q:"What is dual enrollment in CTE?",opts:["Taking two CTE pathways at once","Taking classes at two schools","Earning free college credit while still in high school","Enrolling in CTE and AP classes simultaneously"],ans:2},
+];
+let qi=0,score=0;
+function initQuiz(){
+  qi=0;score=0;
+  document.getElementById('quizGame').style.display='block';
+  document.getElementById('quizResult').style.display='none';
+  showQ();
+}
+function showQ(){
+  const q=qs[qi];
+  const prog=document.getElementById('quizProg');
+  prog.innerHTML=qs.map((_,i)=>`<div class="qp-dot ${i<qi?'done':i===qi?'curr':''}"></div>`).join('');
+  document.getElementById('quizQ').textContent=q.q;
+  document.getElementById('quizFB').textContent='';
+  document.getElementById('quizFB').style.background='transparent';
+  document.getElementById('quizNext').style.display='none';
+  const opts=document.getElementById('quizOpts');
+  opts.innerHTML=q.opts.map((o,i)=>`<button class="qopt" onclick="answerQ(${i})">${o}</button>`).join('');
+}
+function answerQ(i){
+  const q=qs[qi],btns=document.querySelectorAll('.qopt');
+  btns.forEach(b=>b.disabled=true);
+  const fb=document.getElementById('quizFB');
+  if(i===q.ans){score++;btns[i].classList.add('correct');fb.textContent='✓ Correct!';fb.style.color='#6effa0';}
+  else{btns[i].classList.add('wrong');btns[q.ans].classList.add('correct');fb.textContent='✗ Not quite — the correct answer is highlighted in green.';fb.style.color='#ff8080';}
+  document.getElementById('quizNext').style.display='block';
+}
+document.getElementById('quizNext').addEventListener('click',()=>{
+  qi++;
+  if(qi<qs.length){showQ();}
+  else{
+    document.getElementById('quizGame').style.display='none';
+    const res=document.getElementById('quizResult');res.style.display='block';
+    document.getElementById('qrScore').textContent=score;
+    const msgs=["Keep exploring — CTE has a lot to offer! 📚","Good start! A little more reading and you'll be a CTE expert! 💪","Nice! You know your stuff about CTE! 🎯","Impressive! You clearly know CTE inside and out! 🏆"];
+    document.getElementById('qrMsg').textContent=msgs[score<=1?0:score<=3?1:score<=4?2:3];
+  }
+});
+document.getElementById('quizRestart').addEventListener('click',initQuiz);
+initQuiz();
+
+// ── SPIN THE WHEEL ──
+const facts=[
+  "93% of CTE concentrators graduate high school, compared to just 85% nationally.",
+  "CTE programs are available in 16 Career Clusters covering every major industry.",
+  "Students can earn industry certifications like CompTIA A+ or CNA before they even turn 18.",
+  "Dual enrollment through CTE allows students to earn free college credit while still in high school.",
+  "The Carl D. Perkins Act provides federal funding directly to schools for CTE programs.",
+  "Over 8.8 million students are enrolled in CTE programs across the United States.",
+  "CTSOs like DECA, HOSA, and SkillsUSA give students a chance to compete nationally and win scholarships.",
+  "CTE students are more likely to be employed full-time than non-CTE graduates.",
+  "Work-Based Learning in CTE includes internships, job shadowing, and apprenticeships built into the curriculum.",
+  "Schools that offer CTE programs consistently see higher student engagement and lower dropout rates.",
+];
+const wheelColors=['#1a2f7a','#c8960c','#2a3f9a','#d4a020','#162660','#b8840a','#203380','#e0b030','#1c3070','#c89010'];
+const wCanvas=document.getElementById('wheelCanvas'),wCtx=wCanvas.getContext('2d');
+const wheelLabels=['93% Grad Rate','16 Clusters','Certifications','Free Credit','Perkins V','8.8M Students','CTSOs','Employment','Work-Based Learning','Engagement'];
+let spinning=false,angle=0,spinV=0;
+function drawWheel(a){
+  const cx=160,cy=160,r=148,n=10,slice=(Math.PI*2)/n;
+  wCtx.clearRect(0,0,320,320);
+  for(let i=0;i<n;i++){
+    wCtx.beginPath();wCtx.moveTo(cx,cy);wCtx.arc(cx,cy,r,a+i*slice,a+(i+1)*slice);wCtx.closePath();
+    wCtx.fillStyle=wheelColors[i];wCtx.fill();wCtx.strokeStyle='rgba(255,255,255,.15)';wCtx.lineWidth=1.5;wCtx.stroke();
+    wCtx.save();wCtx.translate(cx,cy);wCtx.rotate(a+(i+.5)*slice);wCtx.textAlign='right';
+    wCtx.fillStyle='#fff';wCtx.font='bold 10px DM Sans';
+    const label=wheelLabels[i];wCtx.fillText(label,r-10,4);wCtx.restore();
+  }
+  wCtx.beginPath();wCtx.arc(cx,cy,22,0,Math.PI*2);wCtx.fillStyle='#0d1b4b';wCtx.fill();
+  wCtx.strokeStyle=wheelColors[0];wCtx.lineWidth=3;wCtx.stroke();
+  wCtx.fillStyle='#c8960c';wCtx.font='bold 11px DM Sans';wCtx.textAlign='center';wCtx.fillText('CTE',cx,cy+4);
+}
+(function animWheel(){if(spinning){angle+=spinV;spinV*=.985;if(spinV<.003){spinning=false;document.getElementById('spinBtn').disabled=false;const n=10,slice=(Math.PI*2)/n;const norm=(((-angle%(Math.PI*2))+(Math.PI*2))%(Math.PI*2));const idx=Math.floor(norm/slice)%n;document.getElementById('spinFact').textContent=facts[idx];}}drawWheel(angle);requestAnimationFrame(animWheel);})();
+document.getElementById('spinBtn').addEventListener('click',()=>{if(spinning)return;spinning=true;spinV=.25+Math.random()*.2;document.getElementById('spinBtn').disabled=true;document.getElementById('spinFact').textContent='Spinning...';});
+
+// ── WASD GAME ──
+const arena=document.getElementById('gameArena'),char=document.getElementById('gameChar');
+const items=[
+  {e:'📜',label:'CompTIA A+',pts:10},{e:'🏥',label:'CNA License',pts:10},{e:'💻',label:'Google IT',pts:10},
+  {e:'🔒',label:'Cybersecurity',pts:10},{e:'📊',label:'MS Office Spec',pts:10},{e:'🎨',label:'Adobe Certified',pts:10},
+  {e:'⚠️',label:'OSHA 10',pts:10},{e:'🩺',label:'Med Terminology',pts:10},{e:'🏆',label:'DECA Trophy',pts:20},
+  {e:'⭐',label:'Scholarship',pts:20},{e:'🎓',label:'Free College Credit',pts:30},{e:'🚀',label:'Dream Career',pts:30},
+];
+let cx2=80,cy2=200,spd=4,score2=0,collected=0,total=0,gameItems=[],keys={};
+let gameStarted=false;
+function startGame(){
+  gameItems=[];arena.querySelectorAll('.game-item').forEach(e=>e.remove());
+  score2=0;collected=0;document.getElementById('gameScore').textContent=0;
+  const aw=arena.offsetWidth,ah=arena.offsetHeight;
+  const shuffled=[...items].sort(()=>Math.random()-.5);
+  total=shuffled.length;
+  document.getElementById('gameCollected').textContent='0 / '+total;
+  shuffled.forEach((it,i)=>{
+    const el=document.createElement('div');el.className='game-item';el.textContent=it.e;
+    el.title=it.label;el.style.animationDelay=(Math.random()*2)+'s';
+    const x=60+Math.random()*(aw-120),y=40+Math.random()*(ah-80);
+    el.style.left=x+'px';el.style.top=y+'px';
+    arena.appendChild(el);
+    gameItems.push({el,x,y,pts:it.pts,label:it.label,done:false});
+  });
+  cx2=80;cy2=ah/2;char.style.left=cx2+'px';char.style.top=cy2+'px';
+  gameStarted=true;
+}
+function gameLoop(){
+  if(!gameStarted){requestAnimationFrame(gameLoop);return;}
+  const aw=arena.offsetWidth,ah=arena.offsetHeight;
+  if(keys['w']||keys['arrowup'])cy2=Math.max(10,cy2-spd);
+  if(keys['s']||keys['arrowdown'])cy2=Math.min(ah-54,cy2+spd);
+  if(keys['a']||keys['arrowleft'])cx2=Math.max(10,cx2-spd);
+  if(keys['d']||keys['arrowright'])cx2=Math.min(aw-46,cx2+spd);
+  char.style.left=cx2+'px';char.style.top=cy2+'px';
+  gameItems.forEach(it=>{
+    if(it.done)return;
+    const dx=(it.x+16)-(cx2+18),dy=(it.y+16)-(cy2+18);
+    if(Math.sqrt(dx*dx+dy*dy)<32){
+      it.done=true;it.el.classList.add('collected');
+      score2+=it.pts;collected++;
+      document.getElementById('gameScore').textContent=score2;
+      document.getElementById('gameCollected').textContent=collected+' / '+total;
+      document.getElementById('gameMsg').textContent='Got '+it.label+'! +'+it.pts+' pts 🎉';
+      setTimeout(()=>it.el.remove(),400);
+      if(collected===total){document.getElementById('gameMsg').textContent='🏆 You collected every credential! Score: '+score2+' — Amazing!';}
+    }
+  });
+  requestAnimationFrame(gameLoop);
+}
+document.addEventListener('keydown',e=>{keys[e.key.toLowerCase()]=true;});
+document.addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=false;});
+['btnW','btnA','btnS','btnD'].forEach(id=>{
+  const btn=document.getElementById(id),k=btn.dataset.key;
+  btn.addEventListener('mousedown',()=>{keys[k]=true;btn.classList.add('pressed');});
+  btn.addEventListener('mouseup',()=>{keys[k]=false;btn.classList.remove('pressed');});
+  btn.addEventListener('touchstart',e=>{e.preventDefault();keys[k]=true;btn.classList.add('pressed');},{passive:false});
+  btn.addEventListener('touchend',()=>{keys[k]=false;btn.classList.remove('pressed');});
+});
+const gobs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting&&!gameStarted){startGame();}});},{threshold:.3});
+gobs.observe(arena);
+gameLoop();
+</script>
+</body>
+</html>
